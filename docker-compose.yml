@@ -1,0 +1,8 @@
+services:
+  panel-procesos:
+    build: .
+    image: panel-procesos:1.0
+    container_name: panel-procesos
+    ports:
+      - "8080:80"        # http://localhost:8080
+    restart: unless-stopped

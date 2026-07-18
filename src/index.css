@@ -1,0 +1,573 @@
+/* ==========================================================================
+   Panel de Procesos · Sistema de diseño
+   Paleta: tinta azul marino sobre fondo gris frío; cada proceso aporta
+   su propio color de acento a través de la variable --acento.
+   Tipografía: Bricolage Grotesque (títulos), Instrument Sans (interfaz)
+   e IBM Plex Mono (cifras y comprobantes).
+   ========================================================================== */
+
+:root {
+  --tinta: #16203b;
+  --tinta-suave: #5a6478;
+  --fondo: #eef1f6;
+  --superficie: #ffffff;
+  --linea: #d9dee8;
+  --acento: #2456e6; /* cada proceso la sobrescribe */
+  --radio: 14px;
+  --display: 'Bricolage Grotesque', 'Segoe UI', system-ui, sans-serif;
+  --cuerpo: 'Instrument Sans', system-ui, -apple-system, sans-serif;
+  --mono: 'IBM Plex Mono', ui-monospace, 'Cascadia Mono', monospace;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  background:
+    radial-gradient(circle at top left, rgba(36, 86, 230, 0.08), transparent 28%),
+    linear-gradient(180deg, #f7f9fd 0%, #eef2f8 100%);
+  color: var(--tinta);
+  font: 400 16px/1.55 var(--cuerpo);
+  -webkit-font-smoothing: antialiased;
+}
+
+.contenedor {
+  max-width: 1080px;
+  margin: 0 auto;
+  padding: 40px 24px 28px;
+}
+
+/* --------------------------------------------------------------------------
+   Cabecera
+   -------------------------------------------------------------------------- */
+.cabecera {
+  margin-bottom: 26px;
+}
+
+.eyebrow {
+  margin: 0 0 8px;
+  font: 600 11px/1 var(--mono);
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--tinta-suave);
+}
+
+.cabecera h1 {
+  margin: 0;
+  font: 800 clamp(34px, 5vw, 48px)/1.05 var(--display);
+  letter-spacing: -0.02em;
+}
+
+.cabecera-sub {
+  margin: 10px 0 0;
+  max-width: 62ch;
+  color: var(--tinta-suave);
+  font-size: 15px;
+}
+
+/* --------------------------------------------------------------------------
+   Pestañas de procesos
+   -------------------------------------------------------------------------- */
+.pestanas {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-bottom: 22px;
+}
+
+.pestana {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 16px 10px 10px;
+  border: 1px solid var(--linea);
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.78);
+  color: var(--tinta);
+  font: 500 14px/1 var(--cuerpo);
+  cursor: pointer;
+  transition: border-color 0.15s ease, background 0.15s ease, color 0.15s ease, transform 0.15s ease;
+}
+
+.pestana:hover {
+  transform: translateY(-1px);
+}
+
+.pestana-codigo {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 34px;
+  padding: 5px 7px;
+  border-radius: 999px;
+  background: color-mix(in srgb, var(--acento) 14%, transparent);
+  color: var(--acento);
+  font: 600 11px/1 var(--mono);
+  letter-spacing: 0.04em;
+}
+
+.pestana:hover {
+  border-color: var(--acento);
+}
+
+.pestana.activa {
+  background: var(--acento);
+  border-color: var(--acento);
+  color: #ffffff;
+}
+
+.pestana.activa .pestana-codigo {
+  background: rgba(255, 255, 255, 0.22);
+  color: #ffffff;
+}
+
+/* --------------------------------------------------------------------------
+   Escenario y distribución de cada proceso
+   -------------------------------------------------------------------------- */
+.escenario {
+  animation: aparecer 0.25s ease-out;
+}
+
+.panel {
+  display: grid;
+  grid-template-columns: 1.05fr 0.95fr;
+  gap: 22px;
+  align-items: start;
+}
+
+/* --------------------------------------------------------------------------
+   Tarjeta de entrada de datos
+   -------------------------------------------------------------------------- */
+.tarjeta {
+  background: linear-gradient(180deg, #ffffff 0%, #fbfcff 100%);
+  border: 1px solid var(--linea);
+  border-radius: var(--radio);
+  padding: 26px 26px 24px;
+  box-shadow: 0 14px 40px -28px rgba(22, 32, 59, 0.45);
+}
+
+.tarjeta h2 {
+  margin: 0 0 6px;
+  font: 700 24px/1.2 var(--display);
+  letter-spacing: -0.01em;
+}
+
+.descripcion {
+  margin: 0 0 20px;
+  font-size: 14.5px;
+  color: var(--tinta-suave);
+}
+
+.campo {
+  margin-bottom: 16px;
+}
+
+.etiqueta {
+  display: block;
+  margin-bottom: 7px;
+  font: 600 11px/1 var(--mono);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--tinta-suave);
+}
+
+input[type='number'],
+select {
+  width: 100%;
+  padding: 12px 14px;
+  border: 1px solid var(--linea);
+  border-radius: 10px;
+  background: var(--superficie);
+  color: var(--tinta);
+  font: 500 16px/1.3 var(--cuerpo);
+  transition: border-color 0.15s ease, box-shadow 0.15s ease;
+}
+
+input[type='number']:focus,
+select:focus {
+  outline: none;
+  border-color: var(--acento);
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--acento) 18%, transparent);
+}
+
+.casilla {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin: 4px 0 18px;
+  font-size: 14.5px;
+  color: var(--tinta);
+  cursor: pointer;
+}
+
+.casilla input {
+  width: 17px;
+  height: 17px;
+  accent-color: var(--acento);
+}
+
+/* Botones */
+.boton-principal {
+  width: 100%;
+  padding: 13px 18px;
+  border: none;
+  border-radius: 10px;
+  background: linear-gradient(180deg, color-mix(in srgb, var(--acento) 95%, white) 0%, var(--acento) 100%);
+  color: #ffffff;
+  font: 600 15px/1 var(--cuerpo);
+  cursor: pointer;
+  transition: filter 0.15s ease, transform 0.05s ease;
+}
+
+.boton-principal:hover {
+  filter: brightness(1.07);
+}
+
+.boton-principal:active {
+  transform: translateY(1px);
+}
+
+.boton-secundario {
+  width: 100%;
+  margin-top: 12px;
+  padding: 11px 18px;
+  border: 1px solid var(--linea);
+  border-radius: 10px;
+  background: transparent;
+  color: var(--tinta-suave);
+  font: 600 14px/1 var(--cuerpo);
+  cursor: pointer;
+  transition: border-color 0.15s ease, color 0.15s ease;
+}
+
+.boton-secundario:hover {
+  border-color: var(--acento);
+  color: var(--acento);
+}
+
+.botones-op {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 10px;
+  margin-top: 8px;
+}
+
+.boton-op {
+  padding: 13px 0;
+  border: 1px solid var(--linea);
+  border-radius: 10px;
+  background: var(--superficie);
+  color: var(--tinta);
+  font: 600 20px/1 var(--mono);
+  cursor: pointer;
+  transition: border-color 0.15s ease, background 0.15s ease, color 0.15s ease;
+}
+
+.boton-op:hover {
+  border-color: var(--acento);
+  background: color-mix(in srgb, var(--acento) 8%, var(--superficie));
+  color: var(--acento);
+}
+
+:focus-visible {
+  outline: 2px solid var(--acento);
+  outline-offset: 2px;
+}
+
+.nota {
+  margin: 14px 0 0;
+  font-size: 12.5px;
+  line-height: 1.5;
+  color: var(--tinta-suave);
+}
+
+/* --------------------------------------------------------------------------
+   Ticket de resultados (elemento distintivo de la aplicación)
+   -------------------------------------------------------------------------- */
+.ticket {
+  position: relative;
+  background: linear-gradient(180deg, #ffffff 0%, #fbfcff 100%);
+  border: 1px solid var(--linea);
+  border-radius: var(--radio);
+  border-top: 4px solid var(--acento);
+  padding: 20px 22px 18px;
+  box-shadow: 0 14px 40px -26px rgba(22, 32, 59, 0.45);
+  animation: imprimir 0.3s ease-out;
+}
+
+.ticket-cabecera {
+  margin: 0 0 14px;
+  font: 600 11px/1 var(--mono);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--acento);
+}
+
+.ticket-subtitulo {
+  margin: 0 0 8px;
+  font: 600 11px/1 var(--mono);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--tinta-suave);
+}
+
+.ticket-valor {
+  margin: 0 0 10px;
+  font: 600 clamp(34px, 4.5vw, 44px)/1.05 var(--mono);
+  letter-spacing: -0.02em;
+  color: var(--tinta);
+  overflow-wrap: anywhere;
+}
+
+/* Línea perforada con muescas laterales, como un comprobante troquelado */
+.divisor {
+  position: relative;
+  margin: 16px -22px;
+  border-top: 2px dashed var(--linea);
+}
+
+.divisor::before,
+.divisor::after {
+  content: '';
+  position: absolute;
+  top: -8px;
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  background: var(--fondo);
+  border: 1px solid var(--linea);
+}
+
+.divisor::before {
+  left: -8px;
+}
+
+.divisor::after {
+  right: -8px;
+}
+
+.fila {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 14px;
+  padding: 4px 0;
+  font: 400 13.5px/1.5 var(--mono);
+  color: var(--tinta);
+}
+
+.fila span:first-child {
+  color: var(--tinta-suave);
+}
+
+.fila.total {
+  font-weight: 600;
+}
+
+.fila.total span:first-child {
+  color: var(--tinta);
+}
+
+.fila.resta span:last-child {
+  color: #b3372c;
+}
+
+.fila.suma span:last-child {
+  color: #0e8a5f;
+}
+
+.insignia {
+  display: inline-flex;
+  align-items: center;
+  padding: 5px 12px;
+  border-radius: 999px;
+  font: 600 12px/1 var(--mono);
+  letter-spacing: 0.03em;
+}
+
+.insignia-acento {
+  background: color-mix(in srgb, var(--acento) 14%, transparent);
+  color: var(--acento);
+}
+
+.historial {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  font: 400 13px/1.4 var(--mono);
+  color: var(--tinta-suave);
+}
+
+.historial li {
+  padding: 6px 0;
+  border-bottom: 1px dashed var(--linea);
+  overflow-wrap: anywhere;
+}
+
+.historial li:last-child {
+  border-bottom: none;
+}
+
+.vacio {
+  border: 2px dashed var(--linea);
+  border-radius: 12px;
+  padding: 26px 18px;
+  text-align: center;
+  color: var(--tinta-suave);
+  font-size: 14px;
+}
+
+.vacio p {
+  margin: 0;
+}
+
+.vacio-titulo {
+  margin: 0 0 4px !important;
+  font: 600 11px/1 var(--mono);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.alerta {
+  margin: 0;
+  padding: 12px 14px;
+  border: 1px solid #efc7c4;
+  border-radius: 10px;
+  background: #fbebea;
+  color: #8c2822;
+  font-size: 14px;
+}
+
+/* --------------------------------------------------------------------------
+   Detalles específicos: barra de IMC y filas de temperatura
+   -------------------------------------------------------------------------- */
+.barra-imc {
+  position: relative;
+  margin: 18px 2px 6px;
+}
+
+.barra-segmentos {
+  display: flex;
+  height: 10px;
+  border-radius: 999px;
+  overflow: hidden;
+}
+
+.barra-marcador {
+  position: absolute;
+  top: -4px;
+  width: 4px;
+  height: 18px;
+  border-radius: 2px;
+  background: var(--tinta);
+  border: 1px solid #ffffff;
+  transform: translateX(-50%);
+}
+
+.fila-temp {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 14px;
+  padding: 10px 12px;
+  margin-bottom: 8px;
+  border: 1px solid var(--linea);
+  border-radius: 10px;
+  font: 400 14px/1.4 var(--mono);
+}
+
+.fila-temp span:first-child {
+  color: var(--tinta-suave);
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.fila-temp strong {
+  font-weight: 600;
+  color: var(--tinta);
+}
+
+.fila-temp.origen {
+  border-color: var(--acento);
+  background: color-mix(in srgb, var(--acento) 7%, var(--superficie));
+}
+
+.marca-origen {
+  font: 600 10px/1 var(--mono);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  font-style: normal;
+  color: var(--acento);
+}
+
+/* --------------------------------------------------------------------------
+   Pie de página
+   -------------------------------------------------------------------------- */
+.pie {
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 8px 20px;
+  margin-top: 30px;
+  padding-top: 16px;
+  border-top: 1px solid var(--linea);
+  font-size: 13px;
+  color: var(--tinta-suave);
+}
+
+/* --------------------------------------------------------------------------
+   Animaciones y responsive
+   -------------------------------------------------------------------------- */
+@keyframes imprimir {
+  from {
+    opacity: 0;
+    transform: translateY(-8px) scale(0.985);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+@keyframes aparecer {
+  from {
+    opacity: 0;
+    transform: translateY(4px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .ticket,
+  .escenario {
+    animation: none;
+  }
+
+  * {
+    transition: none !important;
+  }
+}
+
+@media (max-width: 860px) {
+  .contenedor {
+    padding: 28px 16px 22px;
+  }
+
+  .panel {
+    grid-template-columns: 1fr;
+  }
+
+  .pie {
+    flex-direction: column;
+  }
+
+  .botones-op {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
